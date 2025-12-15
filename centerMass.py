@@ -2,6 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.image as mpimg
+from scipy import ndimage
 
 """
 Cálculo (sencillo y poco optimizado) del centro de masa de una imagen 2D
@@ -41,19 +42,26 @@ def plot_cm(img):
     cm = get_center_mass(new_img)
     print(get_center_mass(new_img))
 
-
+    fig, ax = plt.subplots()
     img = mpimg.imread(img)
-    plt.imshow(img)
-    plt.scatter(cm[0], cm[1], c='red', s=70, marker='x', label='Centro de Masa del sistema')
-    plt.xlabel('eje X')
-    plt.ylabel('eje Y')
-    plt.legend()
+    ax.imshow(img)
+
+    cm2 = ndimage.center_of_mass(new_img)
+    ax.scatter(cm2[0], cm2[1], c='blue', s=70, marker='x', label='Centro de Masa del sistema (scipy)')
+    # Invert the y-axis
+    ax.invert_yaxis()
+    ax.scatter(cm[0], cm[1], c='red', s=70, marker='x', label='Centro de Masa del sistema')
+    ax.set_xlabel('eje X')
+    ax.set_ylabel('eje Y')
+    ax.legend()
     plt.show()
+
+
 
 
 def main():
     if __name__ == '__main__':
-        plot_cm('anillo.png')
+        plot_cm('manybody.png')
 
 
 main()
