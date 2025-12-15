@@ -13,11 +13,7 @@ Finalmente, se lo divide por las "masas" de todos los pixeles.
 """
 
 
-img_array_cv2 = cv2.imread('anillo.png', 0)
-img_reverted = cv2.bitwise_not(img_array_cv2)
 
-new_img = img_reverted / 255.0
-print(img_array_cv2.shape)
 
 def get_center_mass(imgArray):
     # Calcs center of mass from the left bottom pixel of the screen as the center of coordinates.
@@ -34,14 +30,30 @@ def get_center_mass(imgArray):
     return finalVec
 
 
-cm = get_center_mass(new_img)
-print(get_center_mass(new_img))
+def plot_cm(img):
+    # Esta función plottea la imagen y su correspondiente centro de masa.
+    img_array_cv2 = cv2.imread(img, 0)
+    img_reverted = cv2.bitwise_not(img_array_cv2)
+
+    new_img = img_reverted / 255.0
+    print(img_array_cv2.shape)
+
+    cm = get_center_mass(new_img)
+    print(get_center_mass(new_img))
 
 
-img = mpimg.imread('anillo.png')
-plt.imshow(img)
-plt.scatter(cm[0], cm[1], c='red', s=70, label='Centro de Masa del sistema')
-plt.xlabel('eje X')
-plt.ylabel('eje Y')
-plt.legend()
-plt.show()
+    img = mpimg.imread(img)
+    plt.imshow(img)
+    plt.scatter(cm[0], cm[1], c='red', s=70, marker='x', label='Centro de Masa del sistema')
+    plt.xlabel('eje X')
+    plt.ylabel('eje Y')
+    plt.legend()
+    plt.show()
+
+
+def main():
+    if __name__ == '__main__':
+        plot_cm('anillo.png')
+
+
+main()
